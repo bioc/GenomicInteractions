@@ -19,7 +19,6 @@
 #'
 #' @importFrom Rsamtools scanBamFlag ScanBamParam scanBam bamFlagAsBitMatrix
 #' @importFrom IRanges IRanges
-#' @import data.table
 #' @importFrom stringr str_split
 #' @importFrom rtracklayer import.bed
 #'
@@ -195,7 +194,7 @@ makeGenomicInteractionsFromFile = function(fn, type, experiment_name="", descrip
 #' @param chr_names ordered chromosome names (for renaming)
 #' @return data.table containing information on the individual interactions
 #'
-#' @import data.table
+#' @importFrom data.table data.table fread .N
 #'
 .importHicLib = function(dir, chr_names){
 
