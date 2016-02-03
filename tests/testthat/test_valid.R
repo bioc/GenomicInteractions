@@ -96,9 +96,9 @@ make_neg_counts <- function() {
 
 test_that("Invalid objects are invalid", {
   #expect_error(make_no_anchors(), "anchor one cannot be of length 0")
-  expect_error(make_unequal_anchors(), "length of anchor one and anchor two do not match")
+  expect_error(make_unequal_anchors())
   expect_error(make_diff_seqinfo(), "seqinfo must be indentical for both GRanges")
-  expect_error(make_bad_counts(), "length of counts must be the same as the anchors")
+  expect_error(make_bad_counts())
   expect_error(make_neg_counts(), "Counts should contain only non-negative integers")
-  
+
 })

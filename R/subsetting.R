@@ -40,47 +40,12 @@ setMethod("subsetByFeatures", c("GenomicInteractions", "character", "character")
     GIObject[i]
 })
 
-#' Standard subsetting methods for GenomicInteractions objects
-#'
-#' @name [
-#' @param x A genomicInteractions object
-#' @param i A numeric, logical or Rle vector
-#' @param j A numeric or logical vector
-#' @param drop Logical. If TRUE, result is coerced to lowest possible dimension.
-#'
-#' @return A GenomicInteractions object containing only the features specified by `i`.
-#' @rdname GenomicInteractions-subset-methods
-NULL
-
-#' @name [
-#' @aliases [,GenomicInteractions,ANY,ANY-method
-#' @docType methods
-#' @rdname GenomicInteractions-subset-methods
-#' @import BiocGenerics
-#' @export
-setMethod(f="[", "GenomicInteractions", function(x, i, j, drop) {
-          if (!missing(i)) {
-            ans_anchor_one = x@anchor_one[i]
-            ans_anchor_two = x@anchor_two[i]
-            ans_counts = x@counts[i]
-            ans_mcols = mcols(x)[i, ,drop=FALSE]
-            x = BiocGenerics:::replaceSlots(x,
-                    anchor_one=ans_anchor_one,
-                    anchor_two=ans_anchor_two,
-                    counts=ans_counts,
-                    elementMetadata=ans_mcols)
-        }
-        if (!missing(j))
-            mcols(x) = mcols(x)[ , j, drop=FALSE]
-        return(x)
-} )
-
 #' Combine GenomicInteractions Methods
 #'
 #' This method will fail if the seqlengths of the objects to be combined do not match.
 #' If some chromosomes appear in one set of seqinfo but not the other, the seqinfo will
 #' be merged.
-#' 
+#'
 #' @name c
 #' @param x,... GenomicInteractions objects to be concatenated
 #' @param ignore.mcols Logical, default FALSE, remove mcols in combined object.

@@ -24,7 +24,7 @@
 #' anchor.one = GRanges(c("chr1", "chr1", "chr1", "chr1"), IRanges(c(10, 20, 30, 20), width=5))
 #' anchor.two = GRanges(c("chr1", "chr1", "chr1", "chr2"), IRanges(c(100, 200, 300, 50), width=5))
 #' interaction_counts = sample(1:10, 4)
-#' test <- GenomicInteractions(anchor.one, anchor.two, experiment_name="test", 
+#' test <- GenomicInteractions(anchor.one, anchor.two, experiment_name="test",
 #'                            description="this is a test", counts=interaction_counts)
 #'
 #' @import GenomicRanges
@@ -42,12 +42,8 @@ setClass("GenomicInteractions",
               elementMetadata = DataFrame() ),
     contains="Vector",
     validity = function(object){
-        if(length(object@anchor_one) != length(object@anchor_two)) {
-            return("length of anchor one and anchor two do not match")
-        } else if(!.isEqualSeqInfo(object@anchor_one, object@anchor_two)) {
+        if(!.isEqualSeqInfo(object@anchor_one, object@anchor_two)) {
             return("seqinfo must be indentical for both GRanges") # this is order-dependent which is not desireable
-        } else if(length(object@counts) != length(object@anchor_one)) {
-            return("length of counts must be the same as the anchors")
         } else if(any(object@counts < 0)) {
             return("Counts should contain only non-negative integers")
         } else{ return(TRUE)}}
@@ -65,18 +61,18 @@ setClass("GenomicInteractions",
 #' @return a GenomicInteractions object
 #'
 #' @examples
-#' 
+#'
 #' library(GenomicRanges)
 #'
 #' anchor.one = GRanges(c("chr1", "chr1", "chr1", "chr1"), IRanges(c(10, 20, 30, 20), width=5))
 #' anchor.two = GRanges(c("chr1", "chr1", "chr1", "chr2"), IRanges(c(100, 200, 300, 50), width=5))
 #' interaction_counts = sample(1:10, 4)
-#' test <- GenomicInteractions(anchor.one, anchor.two, experiment_name="test", 
+#' test <- GenomicInteractions(anchor.one, anchor.two, experiment_name="test",
 #'                            description="this is a test", counts=interaction_counts)
 #'
 #' @import GenomeInfoDb
 #' @export
-GenomicInteractions = function(anchor_one=GRanges(), anchor_two=GRanges(), 
+GenomicInteractions = function(anchor_one=GRanges(), anchor_two=GRanges(),
                                counts=integer(), experiment_name=NULL, description=NULL, ...) {
     if (class(anchor_one)!="GRanges" || class(anchor_two)!="GRanges"){
       stop("Anchors must be GRanges objects")
@@ -105,13 +101,9 @@ GenomicInteractions = function(anchor_one=GRanges(), anchor_two=GRanges(),
         elementMetadata=mcols)
 }
 
-#' Get the length of a GenomicInteractions GIObject
-#'
-#' @param x GenomicInteractions GIObject
-#' @return A numeric vector containing the length of the GIObject
-#' @docType methods
-#' @export
-setMethod(length, "GenomicInteractions", function(x) length(x@anchor_one))
+setMethod("parallelSlotNames", "GenomicInteractions",
+          function(x) c("anchor_one", "anchor_two", "counts", callNextMethod())
+)
 
 # Quick access to mcols()
 

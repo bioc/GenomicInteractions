@@ -1,15 +1,13 @@
-e--
+---
 title: "Package Vignette for Genomic Interactions: ChIA-PET data"
 output: 
   pdf_document: default
   html_document:
     keep_md: TRUE
+vignette: >
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteIndexEntry{GenomicInteractions-ChIAPET}
 ---
-    
-<!--
-%\VignetteEngine{knitr::rmarkdown}
-%\VignetteIndexEntry{GenomicInteractions-ChIAPET}
--->
 
 ```{r global_chunk_opts, echo=F, include=F, eval=FALSE}
 library(knitr)
@@ -116,7 +114,7 @@ most R objects, and also BioConductor `Rle` objects.
 
 ```{r subsetting}
 k562.rep1[1:10] # first interactions in the dataset
-k562.rep1[sample(length(k562.rep1), 100)] # 100 interactions subsample
+# k562.rep1[sample(length(k562.rep1), 100)] # 100 interactions subsample
 k562.cis = k562.rep1[is.cis(k562.rep1)]
 ```
 
